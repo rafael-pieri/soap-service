@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="1592f6da-616e-478b-81c2-3ae324ead330" activeEnvironment="Default" name="soap-service" resourceRoot="" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="c06381bd-bb8c-401a-9968-4320fa8216a6" wsaVersion="NONE" name="StockWSSoapBinding" type="wsdl" bindingName="{http://service.ws.stock.com/}StockWSSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/home/s2it_rpieri/teste.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/s2it_rpieri/teste.wsdl"><con:part><con:url>file:/home/s2it_rpieri/teste.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="StockWS" targetNamespace="http://service.ws.stock.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.stock.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://stock.ws.com/">
+  <wsdl:import location="http://172.17.0.3:8080/soap-service/StockWS?wsdl=StockWS.wsdl" namespace="http://stock.ws.com/"></wsdl:import>
+  <wsdl:binding name="StockWSSoapBinding" type="ns1:StockWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AllItems">
+      <soap:operation soapAction="http://stock.ws.com/StockWS/AllItemsRequest" style="document"/>
+      <wsdl:input name="AllItems">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AllItemsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterItem">
+      <soap:operation soapAction="http://stock.ws.com/StockWS/RegisterItemRequest" style="document"/>
+      <wsdl:input name="RegisterItem">
+        <soap:header message="ns1:RegisterItem" part="userToken" use="literal"></soap:header>
+        <soap:body parts="registerItem" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="RegisterItemResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FaultAuthorization">
+        <soap:fault name="FaultAuthorization" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockWS">
+    <wsdl:port binding="tns:StockWSSoapBinding" name="StockWSPort">
+      <soap:address location="http://172.17.0.3:8080/soap-service/StockWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://172.17.0.3:8080/soap-service/StockWS?wsdl=StockWS.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="StockWS" targetNamespace="http://stock.ws.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:ns1="http://stock.ws.com/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://stock.ws.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://stock.ws.com/">
+      <xs:element name="allItems" type="tns:allItems"/>
+      <xs:element name="allItemsResponse" type="tns:allItemsResponse"/>
+      <xs:element name="faultAuthorization" type="xs:string"/>
+      <xs:element name="filters" type="tns:filters"/>
+      <xs:element name="itemsList" type="tns:itemsList"/>
+      <xs:element name="registerItem" type="tns:registerItem"/>
+      <xs:element name="registerItemResponse" type="tns:registerItemResponse"/>
+      <xs:element name="userToken" type="tns:userToken"/>
+      <xs:complexType name="allItems">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="filters" type="tns:filters"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="filters">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="filter" nillable="true" type="tns:filter"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="filter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="type" type="tns:itemType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="allItemsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="items" type="tns:itemsList"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="itemsList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:item"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="item">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element name="quantity" type="xs:int"/>
+          <xs:element minOccurs="0" name="type" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registerItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="item" type="tns:item"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userToken">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="expirationDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="token" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registerItemResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="item" type="tns:item"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="itemType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Book"/>
+          <xs:enumeration value="Cellphone"/>
+          <xs:enumeration value="Tablet"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="AllItems" nillable="true" type="tns:allItems"/>
+      <xs:element name="AllItemsResponse" nillable="true" type="tns:allItemsResponse"/>
+      <xs:element name="UserToken" nillable="true" type="tns:userToken"/>
+      <xs:element name="RegisterItem" nillable="true" type="tns:registerItem"/>
+      <xs:element name="RegisterItemResponse" nillable="true" type="tns:registerItemResponse"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="AllItemsResponse">
+    <wsdl:part element="ns1:AllItemsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegisterItemResponse">
+    <wsdl:part element="ns1:RegisterItemResponse" name="result"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FaultAuthorization">
+    <wsdl:part element="ns1:faultAuthorization" name="FaultAuthorization"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AllItems">
+    <wsdl:part element="ns1:AllItems" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegisterItem">
+    <wsdl:part element="ns1:RegisterItem" name="registerItem"></wsdl:part>
+    <wsdl:part element="ns1:UserToken" name="userToken"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="StockWS">
+    <wsdl:operation name="AllItems">
+      <wsdl:input message="ns1:AllItems" name="AllItems" wsam:Action="http://stock.ws.com/StockWS/AllItemsRequest" wsaw:Action="http://stock.ws.com/StockWS/AllItemsRequest"></wsdl:input>
+      <wsdl:output message="ns1:AllItemsResponse" name="AllItemsResponse" wsam:Action="http://stock.ws.com/StockWS/AllItemsResponse" wsaw:Action="http://stock.ws.com/StockWS/AllItemsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterItem">
+      <wsdl:input message="ns1:RegisterItem" name="RegisterItem" wsam:Action="http://stock.ws.com/StockWS/RegisterItemRequest" wsaw:Action="http://stock.ws.com/StockWS/RegisterItemRequest"></wsdl:input>
+      <wsdl:output message="ns1:RegisterItemResponse" name="RegisterItemResponse" wsam:Action="http://stock.ws.com/StockWS/RegisterItemResponse" wsaw:Action="http://stock.ws.com/StockWS/RegisterItemResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultAuthorization" name="FaultAuthorization" wsam:Action="http://stock.ws.com/StockWS/RegisterItem/Fault/AuthorizationException" wsaw:Action="http://stock.ws.com/StockWS/RegisterItem/Fault/AuthorizationException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://172.17.0.3:8080/soap-service/StockWS</con:endpoint></con:endpoints><con:operation id="be4050bc-8583-41c4-bfaf-0bf62d9e190b" isOneWay="false" action="http://stock.ws.com/StockWS/AllItemsRequest" name="AllItems" bindingOperationName="AllItems" type="Request-Response" outputName="AllItemsResponse" inputName="AllItems" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="78b98995-37e8-482c-a0bd-340827b00ba1" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://172.17.0.3:8080/soap-service/StockWS</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:stoc="http://stock.ws.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <stoc:AllItems>
+         <!--Optional:-->
+         <stoc:filters>
+            <!--Zero or more repetitions:-->
+            <filter>
+               <!--Optional:-->
+               <name>?</name>
+               <!--Optional:-->
+               <type>?</type>
+            </filter>
+         </stoc:filters>
+      </stoc:AllItems>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://stock.ws.com/StockWS/AllItemsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="af738023-2005-4093-b212-1e7cb18db4f4" isOneWay="false" action="http://stock.ws.com/StockWS/RegisterItemRequest" name="RegisterItem" bindingOperationName="RegisterItem" type="Request-Response" outputName="RegisterItemResponse" inputName="RegisterItem" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e3105a63-7b57-409f-af8a-fcd9ab2eadec" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://172.17.0.3:8080/soap-service/StockWS</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:stoc="http://stock.ws.com/">
+   <soapenv:Header>
+      <stoc:UserToken>
+         <expirationDate>2015-08-30T00:00:00</expirationDate>
+         <token>AAA</token>
+      </stoc:UserToken>
+   </soapenv:Header>
+   <soapenv:Body>
+      <stoc:RegisterItem>
+         <item>
+            <code>MEA</code>
+            <name>MEAN</name>
+            <quantity>5</quantity>
+            <type>Livro</type>
+         </item>
+      </stoc:RegisterItem>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://stock.ws.com/StockWS/RegisterItemRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
