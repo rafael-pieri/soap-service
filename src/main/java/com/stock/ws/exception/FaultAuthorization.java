@@ -2,7 +2,7 @@ package com.stock.ws.exception;
 
 import javax.xml.ws.WebFault;
 
-@WebFault(name = "faultAuthorization", targetNamespace = "http://stock.ws.com/")
+@WebFault(name = "faultAuthorization", targetNamespace = "http://ws.stock.com/")
 public class FaultAuthorization extends Exception {
     
     private String faultAuthorization;

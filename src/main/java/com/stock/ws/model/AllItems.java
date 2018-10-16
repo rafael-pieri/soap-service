@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AllItems {
 
-    @XmlElement(namespace = "http://stock.ws.com/")
+    @XmlElement(namespace = "http://ws.stock.com/")
     private Filters filters;
 
     public Filters getFilters() {

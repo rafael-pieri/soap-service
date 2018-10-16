@@ -15,26 +15,26 @@ import javax.xml.ws.FaultAction;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
-@WebService(targetNamespace = "http://stock.ws.com/", name = "StockWS")
+@WebService(targetNamespace = "http://ws.stock.com/", name = "StockWS")
 @XmlSeeAlso({ObjectFactory.class})
 public interface StockWS {
 
     @WebMethod(operationName = "AllItems")
-    @Action(input = "http://stock.ws.com/StockWS/AllItemsRequest",
-            output = "http://stock.ws.com/StockWS/AllItemsResponse")
-    @RequestWrapper(localName = "AllItems", targetNamespace = "http://stock.ws.com/", className = "com.stock.ws.model.AllItems")
-    @ResponseWrapper(localName = "AllItemsResponse", targetNamespace = "http://stock.ws.com/", className = "com.stock.ws.model.AllItemsResponse")
+    @Action(input = "http://ws.stock.com/StockWS/AllItemsRequest",
+            output = "http://ws.stock.com/StockWS/AllItemsResponse")
+    @RequestWrapper(localName = "AllItems", targetNamespace = "http://ws.stock.com/", className = "com.stock.ws.model.AllItems")
+    @ResponseWrapper(localName = "AllItemsResponse", targetNamespace = "http://ws.stock.com/", className = "com.stock.ws.model.AllItemsResponse")
     @WebResult(name = "Items")
-    ItemsList allItems(@WebParam(name = "Filters", targetNamespace = "http://stock.ws.com/") final Filters filters);
+    ItemsList allItems(@WebParam(name = "Filters", targetNamespace = "http://ws.stock.com/") final Filters filters);
 
     @WebMethod(operationName = "RegisterItem")
-    @Action(input = "http://stock.ws.com/StockWS/RegisterItemRequest",
-            output = "http://stock.ws.com/StockWS/RegisterItemResponse",
-            fault = {@FaultAction(className = FaultAuthorization.class, value = "http://stock.ws.com/StockWS/RegisterItem/Fault/AuthorizationException")})
+    @Action(input = "http://ws.stock.com/StockWS/RegisterItemRequest",
+            output = "http://ws.stock.com/StockWS/RegisterItemResponse",
+            fault = {@FaultAction(className = FaultAuthorization.class, value = "http://ws.stock.com/StockWS/RegisterItem/Fault/AuthorizationException")})
     @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-    @WebResult(name = "RegisterItemResponse", targetNamespace = "http://stock.ws.com/", partName = "result")
+    @WebResult(name = "RegisterItemResponse", targetNamespace = "http://ws.stock.com/", partName = "result")
     RegisterItemResponse registerItem(
-            @WebParam(partName = "registerItem", name = "RegisterItem", targetNamespace = "http://stock.ws.com/") final RegisterItem registerItem,
-            @WebParam(partName = "userToken", name = "UserToken", targetNamespace = "http://stock.ws.com/", header = true) final UserToken userToken
+            @WebParam(partName = "registerItem", name = "RegisterItem", targetNamespace = "http://ws.stock.com/") final RegisterItem registerItem,
+            @WebParam(partName = "userToken", name = "UserToken", targetNamespace = "http://ws.stock.com/", header = true) final UserToken userToken
     ) throws FaultAuthorization;
 }
