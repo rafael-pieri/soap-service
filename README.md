@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/rafael-pieri/soap-service.svg?branch=master)](https://travis-ci.com/rafael-pieri/soap-service)
+
 ## JAX-WS: SOAP webservices
 
 ### Overview
